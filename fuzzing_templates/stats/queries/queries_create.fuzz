@@ -1,0 +1,4 @@
+path:/queries/create
+method: post
+------
+{"description":"fuzzstrrrrrrrrrrrrrrrrrrrrrrrr","name":"fuzzstr","query":{"aggregates":[{"column":"fuzzstr","func":"fuzzstr"}],"groupbys":[],"having":[{"col":"fuzzstr","op":"fuzzstr","val":null}],"limit":0,"offset":0,"order_by":[{"col":"fuzzstr","direction":"asc"}],"wheres":[{"col":"fuzzstr","op":"fuzzstr","val":null}]},"timerange_type":"fuzzstr"}

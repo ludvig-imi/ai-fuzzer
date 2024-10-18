@@ -1,0 +1,4 @@
+path:/queries/delete/{query_id}
+method: delete
+------
+{}

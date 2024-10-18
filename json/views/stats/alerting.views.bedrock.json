@@ -1,0 +1,29 @@
+{
+    "openapi": "3.0.0",
+    "definitions": {},
+    "info": {
+        "title": "Stats API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/alerting/forecast": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/AlertQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+path:/security/report/batch
+method: post
+------
+{}

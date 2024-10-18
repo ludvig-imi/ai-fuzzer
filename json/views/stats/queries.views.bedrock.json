@@ -1,0 +1,181 @@
+{
+    "openapi": "3.0.0",
+    "definitions": {},
+    "info": {
+        "title": "Stats API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/queries/create": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "query"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "description": "Query name"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "description": "Query description"
+                                },
+                                "timerange_type": {
+                                    "type": "string",
+                                    "description": "Time range type, static or dynamic, default static"
+                                },
+                                "query": {
+                                    "$ref": "#/definitions/SitekeyStatsEnhancedQuery"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/queries/get": {
+            "get": {
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/queries/get/{query_id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/queries/delete/{query_id}": {
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/queries/update/{query_id}": {
+            "put": {
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "description": "Query name"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "description": "Query description"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/queries/results": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "query_id"
+                            ],
+                            "properties": {
+                                "query_id": {
+                                    "type": "string",
+                                    "description": "The query ID"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/queries/results/{query_result_id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "query_result_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        }
+    }
+}

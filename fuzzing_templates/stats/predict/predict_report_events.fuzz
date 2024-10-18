@@ -1,0 +1,4 @@
+path:/predict/report/events
+method: get
+------
+{}

@@ -1,0 +1,4 @@
+path:/checkpoints/queries/<string:query_type>
+method: post
+------
+{"aggregates":[{"column":"fuzzstr","func":"fuzzstr"}],"end_date":"2024-10-14T00:00:00Z","groupbys":[],"having":[{"col":"fuzzstr","op":"fuzzstr","val":null}],"only_totals":false,"start_date":"2024-10-14T00:00:00Z","wheres":[{"col":"fuzzstr","op":"fuzzstr","val":null}]}

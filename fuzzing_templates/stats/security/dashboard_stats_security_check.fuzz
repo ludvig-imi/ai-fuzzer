@@ -1,0 +1,4 @@
+path:/dashboard/stats/security_check
+method: post
+------
+{"ips":[]}

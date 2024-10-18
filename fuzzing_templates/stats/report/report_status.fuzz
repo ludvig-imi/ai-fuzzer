@@ -1,0 +1,4 @@
+path:/report/status
+method: post
+------
+{"end_date":"2024-10-14T00:00:00Z","page_number":"%s%p%x%d%s%p%x%d%s%p%x%d","page_size":0,"report_type":"all","sitekeys":["00000-00000-00000-00000"],"sort_ascending":false,"sort_field":"records_ratio","start_date":"2024-10-14T00:00:00Z"}

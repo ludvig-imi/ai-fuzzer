@@ -1,0 +1,93 @@
+{
+    "openapi": "3.0.0",
+    "definitions": {},
+    "info": {
+        "title": "Stats API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/dashboard/stats/security_check": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/SecurityCheckQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/security/report/batch": {
+            "post": {
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/security/report/url": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "json_data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "signed_url": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "signed_url"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/security/report/url/status": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "json_data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "job_id": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "job_id"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        }
+    }
+}

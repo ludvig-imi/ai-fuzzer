@@ -1,0 +1,4 @@
+path:/queries/update/{query_id}
+method: put
+------
+{"name":"fuzzstr"}

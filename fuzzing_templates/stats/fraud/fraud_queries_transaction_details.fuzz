@@ -1,0 +1,4 @@
+path:/fraud/queries/transaction_details
+method: post
+------
+{}

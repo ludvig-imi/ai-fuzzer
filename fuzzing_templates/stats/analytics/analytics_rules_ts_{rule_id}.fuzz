@@ -1,0 +1,4 @@
+path:/analytics/rules/ts/{rule_id}
+method: post
+------
+{"gids":null,"granularity":"fuzzstr","interval":"fuzzstr","is_demo":false,"is_staff":false}

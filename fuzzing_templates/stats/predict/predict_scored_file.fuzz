@@ -1,0 +1,4 @@
+path:/predict/scored_file
+method: post
+------
+{"job_id":"fuzzstr","scored_file":"fuzzsstr"}

@@ -1,0 +1,1209 @@
+{"SitekeyStatsResponse": {
+    "type": "object",
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        }
+    }
+},
+"SQLRequest": {
+    "type": "object",
+    "properties": {
+        "sql": {
+            "type": "string"
+        },
+        "params": {
+            "type": "object",
+            "nullable": true
+        }
+    }
+},
+"IPState": {
+    "type": "object",
+    "properties": {
+        "ip": {
+            "type": "string",
+            "format": "ipvAnyAddress"
+        },
+        "client_timestamp": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "source": {
+            "type": "string"
+        },
+        "max_score": {
+            "type": "number"
+        },
+        "max_score_reason": {
+            "type": "string"
+        }
+    }
+},
+"Filter": {
+    "type": "string",
+    "enum": [
+        "bypass",
+        "challenged",
+        "passed",
+        "failed",
+        "safe",
+        "suspicious",
+        "bot",
+        "all",
+        "blocked",
+        "rate_limited"
+    ]
+},
+"FilterRule": {
+    "type": "string",
+    "enum": [
+        "replace",
+        "append",
+        "use_default"
+    ]
+},
+"SitekeyStatsMinimalQuery": {
+    "type": "object",
+    "properties": {
+        "user_type": {
+            "$ref": "#/definitions/UserType"
+        },
+        "sitekeys": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uuid"
+            }
+        },
+        "feats": {
+            "type": "object"
+        },
+        "staff": {
+            "type": "boolean"
+        }
+    }
+},
+"PLShapQuery": {
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "#/definitions/SitekeyStatsMinimalQuery"
+        }
+    ]
+},
+"SitekeyStatsTimeRangeQuery": {
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "#/definitions/SitekeyStatsMinimalQuery"
+        },
+        {
+            "properties": {
+                "start_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "end_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "only_totals": {
+                    "type": "boolean"
+                }
+            }
+        }
+    ]
+},
+"SitekeyStatsStandardQuery": {
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "#/definitions/SitekeyStatsTimeRangeQuery"
+        },
+        {
+            "properties": {
+                "granularity": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer",
+                    "maximum": 50000
+                }
+            }
+        }
+    ]
+},
+"SortCriteria": {
+    "type": "string",
+    "enum": [
+        "total",
+        "anomaly_share",
+        "timestamp_total"
+    ]
+},
+"Sorting": {
+    "type": "string",
+    "enum": [
+        "asc",
+        "desc"
+    ]
+},
+"SitekeyStatsEnhancedQuery": {
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "#/definitions/SitekeyStatsStandardQuery"
+        },
+        {
+            "properties": {
+                "filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Filter"
+                    }
+                },
+                "groupbys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "aggregates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Aggregate"
+                    }
+                },
+                "sort_criteria": {
+                    "$ref": "#/definitions/SortCriteria"
+                },
+                "sorting": {
+                    "$ref": "#/definitions/Sorting"
+                }
+            }
+        }
+    ]
+},
+"SitekeyStatsMinimalQuery": {
+    "type": "object",
+    "properties": {
+        "wheres": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "op": {"type": "string"},
+                    "val": {}
+                },
+                "required": ["col", "op"]
+            }
+        },
+        "groupbys": {
+            "type": "list",
+            "items": {"type": "string"}
+        },
+        "aggregates": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "func": {"type": "string"},
+                    "column": {"type": "string"}
+                },
+                "required": ["func", "column"]
+            }
+        },
+        "having": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "op": {"type": "string"},
+                    "val": {}
+                },
+                "required": ["col", "op"]
+            }
+        }
+    }
+},
+
+"SitekeyStatsStandardQuery": {
+    "type": "object",
+    "properties": {
+        "having": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "op": {"type": "string"},
+                    "val": {}
+                },
+                "required": ["col", "op"]
+            }
+        },
+        "wheres": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "op": {"type": "string"},
+                    "val": {}
+                },
+                "required": ["col", "op"]
+            }
+        },
+        "groupbys": {
+            "type": "list", 
+            "items": {"type": "string"}
+        },
+        "aggregates": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "func": {"type": "string"},
+                    "column": {"type": "string"}
+                },
+                "required": ["func", "column"]
+            }
+        },
+        "order_by": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "direction": {
+                        "type": "string",
+                        "enum": ["asc", "desc"]
+                    }
+                },
+                "required": ["col", "direction"]
+            }
+        }
+    }
+},
+
+"SitekeyStatsEnhancedQuery": {
+    "type": "object",
+    "properties": {
+        "having": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "op": {"type": "string"},
+                    "val": {}
+                },
+                "required": ["col", "op"]
+            }
+        },
+        "wheres": {
+            "type": "list",
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "col": {"type": "string"},
+                    "op": {"type": "string"},
+                    "val": {}
+                },
+                "required": ["col", "op"]
+            }
+        },
+        "groupbys": {
+            "type": "list",
+            "items": {"type": "string"}
+        },
+        "aggregates": {
+            "type": "list", 
+            "items": {
+                "type": "dict",
+                "properties": {
+                    "func": {"type": "string"},
+                    "column": {"type": "string"}
+                },
+                "required": ["func", "column"]
+            }
+        },
+        "order_by": {
+            "type": "list",
+            "items": {
+                "type": "dict", 
+                "properties": {
+                    "col": {"type": "string"},
+                    "direction": {
+                        "type": "string",
+                        "enum": ["asc", "desc"]
+                    }
+                },
+                "required": ["col", "direction"]
+            }
+        },
+        "limit": {"type": "integer"},
+        "offset": {"type": "integer"}
+    }
+},
+
+"RuleQuery": {
+    "type": "object",
+    "properties": {
+        "stmt": {"type": "string", "required": true},
+        "interval": {"type": "string"},
+        "email": {"type": "string"},
+        "timerange": {
+            "type": "array",
+            "items": {"type": "integer"},
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "sv_rule": {"type": "boolean"}
+    }
+},
+
+"RuleLimitTSQuery": {
+    "type": "object",
+    "properties": {
+        "stmt": {"type": "string", "required": true},
+        "timerange": {
+            "type": "array", 
+            "items": {"type": "integer"},
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "interval": {"type": "string"},
+        "granularity": {"type": "integer"}
+    }
+},
+
+"RuleTSQuery": {
+    "type": "object",
+    "properties": {
+        "gids": {
+            "type": "object",
+            "additionalProperties": {"type": "integer"}
+        },
+        "interval": {"type": "string"},
+        "granularity": {"type": "string"},
+        "is_staff": {"type": "boolean"},
+        "is_demo": {"type": "boolean"} 
+    }
+},
+
+"ReportQuery": {
+    "type": "object",
+    "properties": {
+        "start_date": {"type": "string", "format": "date-time"},
+        "end_date": {"type": "string", "format": "date-time"},
+        "sitekeys": {
+            "type": "array",
+            "items": {"type": "string", "format": "uuid"}
+        },
+        "report_type": {
+            "type": "string",
+            "enum": ["predict", "bot", "all"]
+        },
+        "page_number": {"type": "integer"},
+        "page_size": {"type": "integer"},
+        "sort_field": {
+            "type": "string",
+            "enum": ["source_url", "status", "file_error", "url", "date_created", "records_ratio"]
+        },
+        "sort_ascending": {"type": "boolean"}
+    },
+    "required": ["start_date", "end_date", "sitekeys", "report_type", "page_number", "page_size", "sort_field", "sort_ascending"]
+},
+
+"AlertQuery": {
+    "type": "object",
+    "properties": {
+        "anomaly_type": {
+            "type": "string",
+            "enum": ["unusual_trends", "suspicious_traffic", "ongoing_attack"]
+        },
+        "start_date": {"type": "string", "format": "date-time"},
+        "end_date": {"type": "string", "format": "date-time"}, 
+        "user_type": {
+            "type": "string",
+            "enum": ["root", "superuser", "admin", "standard", "temp"]
+        },
+        "sitekeys": {
+            "type": "array",
+            "items": {"type": "string", "format": "uuid"}
+        },
+        "period_seconds": {"type": "integer", "minimum": 3600, "maximum": 21600},
+        "threshold": {"type": "integer", "minimum": 0}
+    },
+    "required": ["anomaly_type", "start_date", "end_date", "user_type", "sitekeys", "period_seconds"]
+},"EventTypes": {
+    "type": "string",
+    "enum": [
+        "getcaptcha",
+        "checkcaptcha",
+        "siteverify",
+        "post-siteverify",
+        "customer-review",
+        "siteverify_nojs",
+        "post-siteverify_nojs"
+    ]
+},
+"UserType": {
+    "type": "string",
+    "enum": [
+        "standard",
+        "premium",
+        "demo"
+    ]
+},
+"SourceTypes": {
+    "type": "string",
+    "enum": [
+        "exchange-server",
+        "cloudflare"
+    ]
+},
+"PrivateLearningTypes": {
+    "type": "string",
+    "enum": [
+        "challenge",
+        "predict"
+    ]
+},
+"ProductTypes": {
+    "type": "string",
+    "enum": [
+        "captcha",
+        "fraud"
+    ]
+},"BaseCaptchaSchema": {
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "type of event (getcaptcha, checkcaptcha)"
+        },
+        "user_agent": {
+            "type": "string",
+            "title": "User Agent",
+            "alias": "ua_string"
+        },
+        "ekey": {
+            "type": "string",
+            "title": "Ekey",
+            "nullable": true
+        },
+        "ekey_hash": {
+            "type": "string",
+            "title": "Ekey Hash",
+            "nullable": true
+        },
+        "score_reason": {
+            "type": "string",
+            "title": "Score Reasons"
+        },
+        "score": {
+            "type": "float",
+            "title": "Score"
+        },
+        "sitekey": {
+            "type": "string",
+            "title": "Sitekey"
+        },
+        "sampled": {
+            "type": "bool",
+            "title": "Sampled"
+        },
+        "good_reasons": {
+            "type": "array",
+            "items": {
+                "type": "union",
+                "members": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "type": "null"
+                    }
+                ]
+            },
+            "title": "Good Reasons",
+            "alias": "good_reasons__generate_pass_uuid"
+        },
+        "bad_reasons": {
+            "type": "array",
+            "items": {
+                "type": "union",
+                "members": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "type": "null"
+                    }
+                ]
+            },
+            "title": "Bad Reasons",
+            "alias": "bad_reasons__generate_pass_uuid"
+        },
+        "client_tokens": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            },
+            "title": "Client Token",
+            "default": null
+        }
+    }
+},
+
+"CheckCaptchaSchema": {
+    "type": "object",
+    "properties": {
+        "bot_classifier_score": {
+            "type": "float",
+            "alias": "worker_classifier_score_check",
+            "nullable": true
+        },
+        "ip": {
+            "type": "string",
+            "alias": "check_remote_addr"
+        },
+        "worker_classifier_features": {
+            "type": "string",
+            "alias": "worker_classifier_features_check",
+            "nullable": true
+        },
+        "best_hash": {
+            "type": "string",
+            "alias": "best_hash_check"
+        },
+        "legacy_hash": {
+            "type": "string",
+            "alias": "legacy_hash_check"
+        },
+        "canvas_hash": {
+            "type": "string",
+            "alias": "canvas_hash_check"
+        },
+        "webgl_hash": {
+            "type": "string",
+            "alias": "webgl_hash_check"
+        },
+        "window_hash": {
+            "type": "string",
+            "alias": "window_hash_check"
+        },
+        "md_hash": {
+            "type": "string",
+            "alias": "md_hash_check"
+        }
+    }
+},
+
+"GetCaptchaSchema": {
+    "type": "object",
+    "properties": {
+        "bot_classifier_score": {
+            "type": "float",
+            "alias": "worker_classifier_score_get",
+            "nullable": true
+        },
+        "ip": {
+            "type": "string",
+            "alias": "get_remote_addr",
+            "nullable": true
+        },
+        "worker_classifier_features": {
+            "type": "string",
+            "alias": "worker_classifier_features_get",
+            "nullable": true
+        },
+        "best_hash": {
+            "type": "string",
+            "alias": "best_hash_get",
+            "nullable": true
+        },
+        "legacy_hash": {
+            "type": "string",
+            "alias": "legacy_hash_get",
+            "nullable": true
+        },
+        "canvas_hash": {
+            "type": "string",
+            "alias": "canvas_hash_get",
+            "nullable": true
+        },
+        "webgl_hash": {
+            "type": "string",
+            "alias": "webgl_hash_get",
+            "nullable": true
+        },
+        "window_hash": {
+            "type": "string",
+            "alias": "window_hash_get",
+            "nullable": true
+        },
+        "md_hash": {
+            "type": "string",
+            "alias": "md_hash_get",
+            "nullable": true
+        },
+        "client_timestamp": {
+            "type": "integer",
+            "alias": "client_timestamp_get",
+            "nullable": true
+        }
+    }
+},
+
+"Item": {
+    "type": "object",
+    "properties": {
+        "ip": {
+            "type": "string"
+        },
+        "pass_code": {
+            "type": "string",
+            "nullable": true
+        },
+        "ekey": {
+            "type": "string",
+            "nullable": true
+        },
+        "client_tokens": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9+/_.-]+={0,2}$"
+            },
+            "nullable": true
+        }
+    }
+},
+
+"ClientData": {
+    "type": "object",
+    "properties": {
+        "client_score": {
+            "type": "float"
+        },
+        "client_score_reason": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "client_class": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "parent_class": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        }
+    }
+},
+
+"ReportItem": {
+    "type": "object",
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "#/Item"
+            }
+        },
+        "client_data": {
+            "$ref": "#/ClientData"
+        },
+        "seed_version": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        }
+    }
+},
+
+"BatchReportItem": {
+    "type": "object",
+    "properties": {
+        "sitekey": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "report_items": {
+            "type": "array",
+            "items": {
+                "$ref": "#/ReportItem"
+            }
+        }
+    }
+},
+
+"BatchReportLine": {
+    "type": "object",
+    "properties": {
+        "sitekey": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "seed_version": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "ip": {
+            "type": "string"
+        },
+        "pass_code": {
+            "type": "string",
+            "nullable": true
+        },
+        "ekey": {
+            "type": "string",
+            "nullable": true
+        },
+        "client_tokens": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9+/_.-]+={0,2}$"
+            },
+            "nullable": true
+        },
+        "client_score": {
+            "type": "float",
+            "nullable": true
+        },
+        "client_score_reason": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "client_class": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "parent_class": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "user_retro_reason": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{0,64}$",
+            "nullable": true
+        },
+        "store_tags": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9_-]{0,64}$"
+            },
+            "nullable": true
+        }
+    }
+},
+
+"CheckSchema": {
+    "type": "object",
+    "properties": {
+        "ips": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "alias": "IPs",
+            "nullable": true
+        },
+        "sitekey": {
+            "type": "string",
+            "nullable": true
+        }
+    }
+},
+
+"SecurityCheckQuery": {
+    "type": "object",
+    "properties": {
+        "ips": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+},
+
+"SecurityCheckEndpointConfig": {
+    "type": "object",
+    "properties": {
+        "payload": {
+            "$ref": "#/SecurityCheckQuery"
+        }
+    }
+},"SitekeyStatsTransactionDetailsQuery": {
+    "type": "object",
+    "properties": {
+        "session_id": {
+            "type": "string"
+        },
+        "start_date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "end_date": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "session_id"
+    ]
+},
+"SitekeyStatsSparklinesQuery": {
+    "type": "object",
+    "properties": {
+        "data": {
+            "type": "object"
+        },
+        "table_name": {
+            "type": "string"
+        },
+        "granularity": {
+            "type": "integer"
+        },
+        "start_date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "end_date": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "data"
+    ]
+},
+"ReviewChoices": {
+    "type": "string",
+    "enum": [
+        "approved",
+        "rejected",
+        "suspicious"
+    ]
+},
+"SitekeyStatsTransactionReviewSchema": {
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "sample_rate": {
+            "type": "integer"
+        },
+        "ekey": {
+            "type": "string"
+        },
+        "sitekey": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "review": {
+            "$ref": "#/components/schemas/ReviewChoices"
+        },
+        "previous_review": {
+            "$ref": "#/components/schemas/ReviewChoices"
+        },
+        "state": {
+            "type": "string"
+        },
+        "fraud_score_reason": {
+            "type": "string"
+        },
+        "fraud_score": {
+            "type": "number"
+        },
+        "product_type": {
+            "type": "string"
+        },
+        "client_timestamp": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "time": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "type",
+        "sample_rate",
+        "ekey",
+        "review"
+    ]
+},
+"SitekeyStatsTransactionsQuery": {
+    "type": "object",
+    "properties": {
+        "limit": {
+            "type": "integer",
+            "maximum": 1000
+        },
+        "offset": {
+            "type": "integer",
+            "maximum": 50000  
+        },
+        "page": {
+            "type": "integer",
+            "maximum": 10000
+        },
+        "orderby": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "start_date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "end_date": {
+            "type": "string",
+            "format": "date-time"  
+        },
+        "sitekey": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "user_type": {
+            "type": "string",
+            "enum": [
+                "enterprise",
+                "demo"
+            ]
+        }
+    },
+    "required": [
+        "user_type"
+    ]
+},"QueryInformation": {
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "nullable": true
+        },
+        "description": {
+            "type": "string",
+            "nullable": true
+        }
+    }
+},
+"QueryRequest": {
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "nullable": true
+        },
+        "description": {
+            "type": "string",
+            "nullable": true
+        },
+        "timerange_type": {
+            "type": "enum"
+        },
+        "query": {
+            "type": "object"
+        }
+    }
+},
+"QueryDescription": {
+    "type": "object",
+    "properties": {
+        "query_id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string",
+            "nullable": true
+        },
+        "date_created": {
+            "type": "datetime"
+        }
+    }
+},
+"QueryResultRequest": {
+    "type": "object",
+    "properties": {
+        "query_id": {
+            "type": "string"
+        }
+    }
+},
+"QueryResult": {
+    "type": "object",
+    "properties": {
+        "query_id": {
+            "type": "string"
+        },
+        "user_id": {
+            "type": "integer"
+        },
+        "metadata": {
+            "type": "object"
+        },
+        "result": {
+        }
+    }
+},"ScoredFileNotification": {
+    "type": "object",
+    "properties": {
+        "job_id": {
+            "type": "string"
+        },
+        "scored_file": {
+            "type": "string"
+        }
+    }
+},"ReportJob": {
+    "type": "object",
+    "properties": {
+        "job_id": {
+            "type": "string"
+        },
+        "date_created": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "status": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "source_url": {
+            "type": "string"
+        },
+        "errors": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "file_error": {
+            "type": "string",
+            "nullable": true
+        },
+        "succeeded": {
+            "type": "integer"
+        },
+        "failed": {
+            "type": "integer"
+        },
+        "records_ratio": {
+            "type": "number"
+        },
+        "report_sitekeys": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "nullable": true
+        }
+    }
+},
+"ReportJobsPage": {
+    "type": "object",
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/ReportJob"
+            }
+        },
+        "total_rows": {
+            "type": "integer"
+        }
+    }
+},
+"ReportJobTotalsByDate": {
+    "type": "object",
+    "properties": {
+        "date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "in_progress": {
+            "type": "integer"
+        },
+        "success": {
+            "type": "integer"
+        },
+        "with_errors": {
+            "type": "integer"
+        },
+        "failed": {
+            "type": "integer"
+        }
+    }
+},
+"ReportJobTotals": {
+    "type": "object",
+    "properties": {
+        "totals_by_date": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/ReportJobTotalsByDate"
+            }
+        },
+        "in_progress": {
+            "type": "integer"
+        },
+        "success": {
+            "type": "integer"
+        },
+        "with_errors": {
+            "type": "integer"
+        },
+        "failed": {
+            "type": "integer"
+        }
+    }
+},
+"ReportSuccessRate": {
+    "type": "object",
+    "properties": {
+        "success_count": {
+            "type": "integer"
+        },
+        "error_count": {
+            "type": "integer"
+        },
+        "success_rate": {
+            "type": "number"
+        }
+    }
+}}

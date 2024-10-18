@@ -1,0 +1,4 @@
+path:/queries/results/{query_result_id}
+method: get
+------
+{}

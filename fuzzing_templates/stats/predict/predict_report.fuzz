@@ -1,0 +1,4 @@
+path:/predict/report
+method: post
+------
+{"callback_url":"fuzzstr","return_predictions":null,"signed_url":"fuzzstr"}

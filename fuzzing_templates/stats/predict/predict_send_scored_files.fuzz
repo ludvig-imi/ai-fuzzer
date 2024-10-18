@@ -1,0 +1,4 @@
+path:/predict/send_scored_files
+method: post
+------
+{}

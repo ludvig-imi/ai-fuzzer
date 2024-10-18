@@ -1,0 +1,8 @@
+../data/services/stats/app/queries/schemas.py
+../data/services/stats/app/schemas.py
+../data/services/stats/app/dramatiq_tasks/schemas.py
+../data/services/stats/app/queries/security/schemas.py
+../data/services/stats/app/queries/fraud/schemas.py
+../data/services/stats/app/endpoints/queries/schemas.py
+../data/services/stats/app/endpoints/predict/schemas.py
+../data/services/stats/app/services/report/schemas.py

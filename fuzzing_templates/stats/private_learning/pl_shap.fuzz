@@ -1,0 +1,4 @@
+path:/pl/shap
+method: post
+------
+{"aggregates":[{"column":"fuzzstr","func":"fuzzstr"}],"groupbys":[],"having":[{"col":"fuzzstr","op":"fuzzstr","val":null}],"wheres":[{"col":"fuzzstr","op":"fuzzstr","val":null}]}

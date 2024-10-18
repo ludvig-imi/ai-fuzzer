@@ -1,0 +1,4 @@
+path:/fraud/queries/<string:query_type>
+method: post
+------
+{}

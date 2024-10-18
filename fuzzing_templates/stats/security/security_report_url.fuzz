@@ -1,0 +1,4 @@
+path:/security/report/url
+method: post
+------
+{"signed_url":null}

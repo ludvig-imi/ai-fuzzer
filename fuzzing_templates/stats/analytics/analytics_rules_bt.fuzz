@@ -1,0 +1,4 @@
+path:/analytics/rules/bt
+method: post
+------
+{"email":"fuzzstr","interval":"fuzzstr","stmt":"fuzzstr","sv_rule":false,"timerange":null}

